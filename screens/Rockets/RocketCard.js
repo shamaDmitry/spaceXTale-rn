@@ -1,43 +1,89 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
-const RocketCard = () => {
-  const navigator = useNavigation();
+const RocketCard = ({item}) => {
+    const navigator = useNavigation();
 
-  return (
-    <TouchableOpacity
-      onPress={() => navigator.navigate('Rocket')}
-    >
-      <View className="bg-zinc-900 rounded-md shadow overflow-hidden mb-3 p-1">
-        <Image
-          resizeMethod="resize"
-          className="w-full h-40 rounded-t-md"
-          source={{
-            uri: 'https://picsum.photos/800/400'
-          }}
-        />
+  {/*First Flight	: Mar 24, 2006*/}
+  {/*Stages	: 2*/}
+  {/*Boosters	: 0*/}
+  {/*Cost Per Launch	: $6.7M*/}
+  {/*Success Rate	: 40 %*/}
 
-        <View className="p-1">
-          <Text className="text-white font-bold text-2xl text-blue-500">
-            Falcon 1
-          </Text>
+    const descriptionData = {
+      'First Flight': item.first_flight,
+      'Stages': item.stages,
+      'Boosters': item.boosters,
+      'Cost Per Launch $': item.cost_per_launch,
+      'Success Rate %': item.success_rate_pct,
+    }
 
-          <Text className="text-slate-500">
-            The Falcon 1 was an expendable launch system privately developed and manufactured by SpaceX during
-            2006-2009. On 28 September 2008, Falcon 1 became the first privately-developed liquid-fuel launch
-            vehicle
-            to go into orbit around the Earth.
-          </Text>
-        </View>
+    return (
+      <View
+        onPress={() => navigator.navigate('Rocket', {id: item.id})}
+      >
+        <Text className="text-red-600">
+          {JSON.stringify(descriptionData, null, 2)}
+        </Text>
 
-        <View className="p-2 pt-0 flex-row justify-between">
-          <Text className="text-white">First Flight:</Text>
-          <Text className="text-white">Mar 24, 2006</Text>
+        <View className="bg-zinc-900 mb-3 p-1">
+          <ScrollView
+            className="space-x-2"
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {
+              item.flickr_images.map(image => {
+                return (
+                  <Image
+                    key={image}
+                    resizeMethod="resize"
+                    className="w-72 h-40"
+                    source={{
+                      uri: image
+                    }}
+                  />
+                )
+              })
+            }
+          </ScrollView>
+
+          <TouchableOpacity
+            onPress={() => navigator.navigate('Rocket', {id: item.id})}
+          >
+            <View className="p-1">
+              <Text className="text-white font-bold text-2xl text-blue-500">
+                {item.name}
+              </Text>
+
+              <Text className="text-slate-500">
+                {item.description}
+              </Text>
+            </View>
+
+            <Text>
+              {Object.keys(descriptionData)}
+            </Text>
+
+            {
+
+              Object.entries(descriptionData).map(item => {
+                console.log(item)
+
+                return (
+                  <View className="p-2 pt-0 flex-row justify-between">
+                    <Text className="text-white"></Text>
+                    <Text className="text-white">{item.first_flight}</Text>
+                  </View>
+                )
+              })
+            }
+          </TouchableOpacity>
         </View>
       </View>
-    </TouchableOpacity>
-  );
-};
+    );
+  }
+;
 
 export default RocketCard;

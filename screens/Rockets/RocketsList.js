@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, ActivityIndicator, FlatList } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import RocketCard from "./RocketCard";
+import { getAllRockets } from "../../services/rockets";
 
 const RocketsList = (props) => {
+  const [rocketsData, setRocketsData] = useState([]);
+
+  useEffect(() => {
+    getAllRockets().then(res => {
+      setRocketsData(res);
+    })
+
+  }, []);
+
   return (
     <SafeAreaView className="flex-1">
       <Header navigation={props.navigation} />
 
-      <ScrollView className="p-2 bg-neutral-900">
-        <Text className="text-2xl mb-4 text-white">
-          Rockets:
-        </Text>
+      <Text className="text-2xl text-white bg-neutral-900 p-1">
+        Rockets:
+      </Text>
 
-        <RocketCard {...props} />
-      </ScrollView>
+      <FlatList
+        className="bg-neutral-900"
+        data={rocketsData}
+        renderItem={(item) => <RocketCard {...item} />}
+        keyExtractor={item => item.id}
+      />
     </SafeAreaView>
   );
 };
