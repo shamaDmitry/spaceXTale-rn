@@ -10,7 +10,18 @@ async function getAllRockets() {
     alert(error)
   }
 }
+async function getOneRocket(id) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/v4/rockets/${id}`);
+    const res = await response.json();
+
+    return res;
+  } catch(error) {
+    alert(error)
+  }
+}
 
 export {
   getAllRockets,
+  getOneRocket,
 }

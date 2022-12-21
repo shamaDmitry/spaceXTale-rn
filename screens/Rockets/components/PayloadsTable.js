@@ -14,9 +14,13 @@ const PayloadsTable = ({data, show}) => {
         Payloads:
       </Text>
 
-      <TableRow />
-      <TableRow />
-      <TableRow />
+      {data.map((d) => (
+        <TableRow
+          key={d.id}
+          title={d.name}
+          content={`${d.kg} kg | ${d.lb} lb`}
+        />
+      ))}
     </View>
   );
 };

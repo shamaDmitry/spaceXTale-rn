@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 
-import { ScrollView, Text, View, ActivityIndicator, FlatList } from 'react-native';
+import { Text, FlatList, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import RocketCard from "./RocketCard";
@@ -20,7 +20,7 @@ const RocketsList = (props) => {
     <SafeAreaView className="flex-1">
       <Header navigation={props.navigation} />
 
-      <Text className="text-2xl text-white bg-neutral-900 p-1">
+      <Text className="text-2xl text-white bg-neutral-900 p-2">
         Rockets:
       </Text>
 

@@ -6,7 +6,7 @@ const Header = ({navigation}) => {
   const isDrawerOpen = useDrawerStatus() === 'open';
 
   return (
-    <View className="bg-neutral-900 flex-row items-center px-2 py-1">
+    <View className="bg-neutral-900 border-b border-b-white flex-row items-center px-2 py-1">
       <Pressable
         onPress={() => navigation.openDrawer()}
       >
@@ -28,7 +28,7 @@ const Header = ({navigation}) => {
       </Pressable>
 
       <Text
-        className="font-thin text-white text-3xl px-3 py-1"
+        className="ml-auto font-thin text-white text-3xl px-3 py-1"
         onPress={() => navigation.navigate('Home')}
       >
         spaceXtale

@@ -3,87 +3,87 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
 const RocketCard = ({item}) => {
-    const navigator = useNavigation();
+  const navigation = useNavigation();
 
-  {/*First Flight	: Mar 24, 2006*/}
-  {/*Stages	: 2*/}
-  {/*Boosters	: 0*/}
-  {/*Cost Per Launch	: $6.7M*/}
-  {/*Success Rate	: 40 %*/}
+  const descriptionData = {
+    'First Flight': item.first_flight,
+    'Stages': item.stages,
+    'Boosters': item.boosters,
+    'Cost Per Launch $': item.cost_per_launch,
+    'Success Rate %': item.success_rate_pct,
+  }
 
-    const descriptionData = {
-      'First Flight': item.first_flight,
-      'Stages': item.stages,
-      'Boosters': item.boosters,
-      'Cost Per Launch $': item.cost_per_launch,
-      'Success Rate %': item.success_rate_pct,
-    }
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Rocket', {id: item.id})}
+    >
+      <View className="bg-stone-700 mx-2 mb-4 p-2">
+        <Image
+          resizeMethod="resize"
+          className="w-full h-40"
+          source={{
+            uri: item.flickr_images[0]
+          }}
+        />
 
-    return (
-      <View
-        onPress={() => navigator.navigate('Rocket', {id: item.id})}
-      >
-        <Text className="text-red-600">
-          {JSON.stringify(descriptionData, null, 2)}
-        </Text>
 
-        <View className="bg-zinc-900 mb-3 p-1">
-          <ScrollView
-            className="space-x-2"
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          >
-            {
-              item.flickr_images.map(image => {
-                return (
-                  <Image
-                    key={image}
-                    resizeMethod="resize"
-                    className="w-72 h-40"
-                    source={{
-                      uri: image
-                    }}
-                  />
-                )
-              })
-            }
-          </ScrollView>
+        <View className="py-1 mb-3">
+          <Text className="text-white font-bold text-2xl text-blue-500">
+            {item.name}
+          </Text>
 
-          <TouchableOpacity
-            onPress={() => navigator.navigate('Rocket', {id: item.id})}
-          >
-            <View className="p-1">
-              <Text className="text-white font-bold text-2xl text-blue-500">
-                {item.name}
-              </Text>
+          <Text className="text-white">
+            {item.description}
+          </Text>
+        </View>
 
-              <Text className="text-slate-500">
-                {item.description}
-              </Text>
-            </View>
+        <View className="py-2 pt-0 flex-row justify-between">
+          <Text className="text-white">
+            First Flight
+          </Text>
+          <Text className="text-white">
+            {item.first_flight}
+          </Text>
+        </View>
 
-            <Text>
-              {Object.keys(descriptionData)}
-            </Text>
+        <View className="py-2 pt-0 flex-row justify-between">
+          <Text className="text-white">
+            Stages
+          </Text>
+          <Text className="text-white">
+            {item.stages}
+          </Text>
+        </View>
 
-            {
+        <View className="py-2 pt-0 flex-row justify-between">
+          <Text className="text-white">
+            Boosters
+          </Text>
+          <Text className="text-white">
+            {item.boosters}
+          </Text>
+        </View>
 
-              Object.entries(descriptionData).map(item => {
-                console.log(item)
+        <View className="py-2 pt-0 flex-row justify-between">
+          <Text className="text-white">
+            Cost Per Launch $
+          </Text>
+          <Text className="text-white">
+            {item.cost_per_launch / 1000000}M USD
+          </Text>
+        </View>
 
-                return (
-                  <View className="p-2 pt-0 flex-row justify-between">
-                    <Text className="text-white"></Text>
-                    <Text className="text-white">{item.first_flight}</Text>
-                  </View>
-                )
-              })
-            }
-          </TouchableOpacity>
+        <View className="py-2 pt-0 flex-row justify-between">
+          <Text className="text-white">
+            Success Rate
+          </Text>
+          <Text className="text-white">
+            {item.success_rate_pct}%
+          </Text>
         </View>
       </View>
-    );
-  }
-;
+    </TouchableOpacity>
+  );
+};
 
 export default RocketCard;
